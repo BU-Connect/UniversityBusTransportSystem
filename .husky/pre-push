@@ -4,3 +4,10 @@
 echo "🚦 Running typecheck & lint before push..."
 # Run across all workspaces (server, client). Adjust if you don’t have these scripts yet.
 npm run typecheck && npm run lint
+
+echo "🔍 Checking for build errors before push..."
+npm run build
+if [ $? -ne 0 ]; then
+  echo "❌ Build failed. Push aborted."
+  exit 1
+fi
