@@ -1,0 +1,14 @@
+:80 {
+  encode zstd gzip
+  root * /srv
+
+  handle_path /api/* {
+    reverse_proxy server:3000
+  }
+
+  handle_path /socket.io/* {
+    reverse_proxy server:3000
+  }
+
+  file_server
+}

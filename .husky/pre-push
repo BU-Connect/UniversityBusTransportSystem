@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🚦 Running typecheck & lint before push..."
+# Run across all workspaces (server, client). Adjust if you don’t have these scripts yet.
+npm run typecheck && npm run lint
