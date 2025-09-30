@@ -28,28 +28,29 @@ const registerUser = async (userData: Partial<IUser>) => {
     const user = new UserModel({
       ...userData,
       password: hashedPassword,
-      isActive: true,
+      isActive: false,
       clientITInfo: userData.clientITInfo,
     });
 
-    const createdUser = await user.save({ session });
+      await user.save({ session });
 
     await session.commitTransaction();
 
-    const loginResponse = await AuthService.loginUser({
-      email: createdUser.email,
-      password: userData.password,
-      clientInfo: userData.clientITInfo,
-    });
-
-    return loginResponse;
+    // const loginResponse = await AuthService.loginUser({
+    //   email: createdUser.email,
+    //   password: userData.password,
+    //   clientInfo: userData.clientITInfo,
+    // });
+    //
+    // return loginResponse;
+    return null;
   } catch (error) {
     if (session.inTransaction()) {
       await session.abortTransaction();
     }
     throw error;
   } finally {
-    session.endSession();
+  await  session.endSession();
   }
 };
 
