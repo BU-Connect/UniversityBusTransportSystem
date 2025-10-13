@@ -112,7 +112,7 @@ const ResetPasswordForm = () => {
 const ResetPasswordPage = () => {
   return (
     <div className="flex items-center justify-center h-screen overflow-hidden">
-      <div className="flex flex-col lg:flex-row bg-white border border-gray-200 rounded-2xl shadow-2xl overflow-hidden w-full h-full">
+      <div className="flex flex-col lg:flex-row-reverse bg-white border border-gray-200 rounded-2xl shadow-2xl overflow-hidden w-full h-full">
         {/* LEFT SIDE IMAGE */}
         <div className="w-full lg:w-[70%] relative h-full">
           <Image
