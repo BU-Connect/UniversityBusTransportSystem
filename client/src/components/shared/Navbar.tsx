@@ -5,8 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import { logOutUser } from "@/services/AuthServices";
 
-export default function Navbar() 
-{
+export default function Navbar() {
   const { user, setIsLoading } = useUser();
   const pathName = usePathname();
   const router = useRouter();
@@ -50,6 +49,12 @@ export default function Navbar()
           </Link>
           <Link href="/schedules" className="text-gray-700 hover:text-gray-800">
             Schedules
+          </Link>
+          <Link href="/routes" className="text-gray-700 hover:text-gray-800">
+            About
+          </Link>
+          <Link href="/schedules" className="text-gray-700 hover:text-gray-800">
+            Contacts
           </Link>
 
 
