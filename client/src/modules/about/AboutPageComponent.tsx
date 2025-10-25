@@ -3,112 +3,159 @@
 import React from "react";
 import Image from "next/image";
 
-const AboutPageComponent = () => {
+const AboutPageComponent: React.FC = () => {
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-start">
             {/* hero */}
-            <div className="w-full relative h-[300px] md:h-[400px] lg:h-[450px]">
+            <header className="w-full relative h-[320px] sm:h-[380px] md:h-[420px] lg:h-[480px]">
                 <Image
                     width={1600}
                     height={600}
                     src="/static/loginpagebanner.png"
                     alt="About Us Banner"
                     className="w-full h-full object-cover"
+                    priority
                 />
-                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                    <h3 className="text-3xl md:text-4xl font-bold text-white uppercase">
-                        About Us
-                    </h3>
-                </div>
-            </div>
 
-            {/*about*/}
-            <div className="max-w-6xl w-full px-6 md:px-12 lg:px-20 py-16">
-                <div className="grid md:grid-cols-2 gap-12 mb-16">
-                    {/* Left Section */}
-                    <div>
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                            Smarter University Transport with{" "}
-                            <span className="text-red-600">UBTS</span>
+                {/* dark overlay */}
+                <div className="absolute inset-0 bg-black/35 flex items-center justify-center px-6">
+                    <div className="text-center max-w-3xl">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-tight mb-4">
+                            Smarter University Transport with <span className="text-black">CampusConnect</span>
                         </h1>
-                        <p className="text-gray-600 mb-8">
-                            UBTS is a smart web app designed to make university transport more efficient
-                            and stress-free. It allows students and staff to check real-time bus schedules,
-                            live tracking, and instant updates directly from their devices.
+                        <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6">
+                            Real-time tracking, dynamic scheduling and instant notifications — all in one
+                            beautiful, reliable platform built for students and staff.
                         </p>
-                        <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-medium">
-                            Explore Features
-                        </button>
-                    </div>
-
-                    {/* Right Section*/}
-                    <div className="grid sm:grid-cols-2 gap-6">
-                        <div className="bg-white shadow-md rounded-2xl p-6">
-                            <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                                Live Bus Tracking
-                            </h3>
-                            <p className="text-gray-600 text-sm">
-                                View your bus’s location in real-time and plan your travel accordingly
-                                with GPS-based tracking.
-                            </p>
-                        </div>
-                        <div className="bg-white shadow-md rounded-2xl p-6">
-                            <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                                Dynamic Scheduling
-                            </h3>
-                            <p className="text-gray-600 text-sm">
-                                UBTS updates schedules automatically based on route changes and
-                                traffic conditions.
-                            </p>
-                        </div>
-                        <div className="bg-white shadow-md rounded-2xl p-6">
-                            <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                                User Notifications
-                            </h3>
-                            <p className="text-gray-600 text-sm">
-                                Receive instant alerts for route delays, schedule changes, or bus arrivals.
-                            </p>
-                        </div>
-                        <div className="bg-white shadow-md rounded-2xl p-6">
-                            <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                                Reliable Support
-                            </h3>
-                            <p className="text-gray-600 text-sm">
-                                Our support team ensures a smooth experience and quick assistance
-                                whenever needed.
-                            </p>
+                        <div className="flex items-center justify-center gap-3">
+                            <a
+                                href="#features"
+                                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-full font-semibold shadow-lg"
+                            >
+                                Get Started
+                            </a>
+                            <a
+                                href="#contact"
+                                className="inline-flex items-center gap-2 bg-white/90 hover:bg-white text-red-600 px-4 py-2 rounded-full font-medium"
+                            >
+                                Contact Sales
+                            </a>
                         </div>
                     </div>
                 </div>
+            </header>
 
-                {/*Bottom*/}
-                <div className="grid md:grid-cols-3 gap-6">
+            {/* main content */}
+            <main className="max-w-7xl w-full px-6  py-12 ">
+                <section id="features" className="bg-white rounded-3xl   p-6 md:p-10 mb-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                        <div className="lg:col-span-1">
+                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                                Why UBTS?
+                            </h2>
+                            <p className="text-gray-600 mb-6">
+                                UBTS makes campus transportation predictable, safe and efficient. From
+                                live driver tracking to automated route adjustments, we save time and
+                                reduce waiting.
+                            </p>
+                            <ul className="space-y-3 text-gray-700">
+                                <li className="flex items-start gap-3">
+                                    <span className="text-red-600 font-bold">•</span>
+                                    <span>Live tracking and ETA for every stop</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <span className="text-red-600 font-bold">•</span>
+                                    <span>Automatic schedule updates based on traffic</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <span className="text-red-600 font-bold">•</span>
+                                    <span>Role-based access for students, drivers and admins</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div className="p-6 rounded-2xl shadow-md border border-gray-100">
+                                <h3 className="font-semibold text-lg text-gray-900 mb-2">Live Bus Tracking</h3>
+                                <p className="text-gray-600 text-sm">View vehicle locations in real-time and share ETAs with students.</p>
+                            </div>
+                            <div className="p-6 rounded-2xl shadow-md border border-gray-100">
+                                <h3 className="font-semibold text-lg text-gray-900 mb-2">Dynamic Scheduling</h3>
+                                <p className="text-gray-600 text-sm">Routes update automatically when delays or detours occur.</p>
+                            </div>
+                            <div className="p-6 rounded-2xl shadow-md border border-gray-100">
+                                <h3 className="font-semibold text-lg text-gray-900 mb-2">Notifications</h3>
+                                <p className="text-gray-600 text-sm">Instant alerts for students about delays, arrivals and changes.</p>
+                            </div>
+                            <div className="p-6 rounded-2xl shadow-md border border-gray-100">
+                                <h3 className="font-semibold text-lg text-gray-900 mb-2">Secure Access</h3>
+                                <p className="text-gray-600 text-sm">Role-based authentication and permissions keep your campus safe.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Complex grid view system */}
+                <section className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Campus Dashboard (Grid View)</h2>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 auto-rows-fr">
+                        <div className="lg:col-span-2 row-span-2 bg-white rounded-2xl shadow p-6">
+                            <h4 className="font-semibold text-lg text-gray-900 mb-2">Live Map</h4>
+                            <p className="text-gray-600 text-sm">Interactive map showing all active vehicles and routes.</p>
+                        </div>
+                        <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6">
+                            <h4 className="font-semibold text-lg text-gray-900 mb-2">Next Arrivals</h4>
+                            <p className="text-gray-600 text-sm">Upcoming arrivals for selected stops.</p>
+                        </div>
+                        <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6">
+                            <h4 className="font-semibold text-lg text-gray-900 mb-2">Driver Status</h4>
+                            <p className="text-gray-600 text-sm">Vehicle assignments and driver availability overview.</p>
+                        </div>
+
+                        <div className="lg:col-span-1 bg-white rounded-2xl shadow p-4">
+                            <h5 className="font-semibold text-sm text-gray-900 mb-1">Active Routes</h5>
+                            <div className="text-3xl font-bold text-red-600">28</div>
+                        </div>
+                        <div className="lg:col-span-1 bg-white rounded-2xl shadow p-4">
+                            <h5 className="font-semibold text-sm text-gray-900 mb-1">Vehicles</h5>
+                            <div className="text-3xl font-bold text-red-600">62</div>
+                        </div>
+                        <div className="lg:col-span-2 bg-white rounded-2xl shadow p-4">
+                            <h5 className="font-semibold text-sm text-gray-900 mb-1">On-time Rate</h5>
+                            <div className="text-3xl font-bold text-red-600">92%</div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Bottom cards */}
+                <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="bg-white shadow-md rounded-2xl p-6">
-                        <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                            Secure Login System
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                            UBTS ensures secure authentication for students and staff with role-based access.
-                        </p>
+                        <h3 className="font-semibold text-lg text-gray-900 mb-2">Secure Login System</h3>
+                        <p className="text-gray-600 text-sm">UBTS ensures secure authentication for students and staff with role-based access.</p>
                     </div>
                     <div className="bg-white shadow-md rounded-2xl p-6">
-                        <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                            Optimized for Performance
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                            The system runs smoothly on all modern devices, keeping the user experience fast and seamless.
-                        </p>
+                        <h3 className="font-semibold text-lg text-gray-900 mb-2">Optimized for Performance</h3>
+                        <p className="text-gray-600 text-sm">The system runs smoothly on all modern devices, keeping the user experience fast and seamless.</p>
                     </div>
                     <div className="bg-white shadow-md rounded-2xl p-6">
-                        <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                            24/7 Accessibility
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                            Access bus details anytime, anywhere — ensuring reliable information at your fingertips.
-                        </p>
+                        <h3 className="font-semibold text-lg text-gray-900 mb-2">24/7 Accessibility</h3>
+                        <p className="text-gray-600 text-sm">Access bus details anytime, anywhere — ensuring reliable information at your fingertips.</p>
                     </div>
-                </div>
-            </div>
+                </section>
+
+                {/* CTA strip */}
+                <section className="mt-12 bg-red-600 text-white rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <h4 className="text-xl font-bold">Ready to improve campus mobility?</h4>
+                        <p className="text-sm opacity-90">Start a free trial or book a demo with our team.</p>
+                    </div>
+                    <div className="flex gap-3">
+                        <a href="#" className="bg-white text-red-600 px-4 py-2 rounded-md font-semibold">Start Free Trial</a>
+                        <a href="#contact" className="border border-white/30 px-4 py-2 rounded-md">Book Demo</a>
+                    </div>
+                </section>
+            </main>
         </div>
     );
 };
