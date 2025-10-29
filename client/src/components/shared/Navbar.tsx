@@ -24,7 +24,7 @@ export default function Navbar() {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <header className="w-full bg-white border-b-2 border-red-600 sticky top-0 z-50 shadow-sm">
+    <header className="w-full bg-white border-b-2 border-red-600 fixed left-0 right-0 top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-16">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -35,6 +35,12 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
+          <Link
+            href="/home"
+            className="text-gray-700 hover:text-red-600 font-medium transition"
+          >
+            Home
+          </Link>
           <Link
             href="/routes"
             className="text-gray-700 hover:text-red-600 font-medium transition"
