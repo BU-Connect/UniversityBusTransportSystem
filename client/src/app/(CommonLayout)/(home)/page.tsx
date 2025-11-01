@@ -3,11 +3,41 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
+const LoadingScreen = () => (
+  <div className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center space-y-6">
+    {}
+    <div className="w-24 h-24 relative">
+      <Image
+        src="/static/logo.png"
+        alt="Campus Connect Logo"
+        fill
+        className="object-contain animate-pulse"
+        sizes="96px"
+      />
+    </div>
+
+    {}
+    <h1 className="text-4xl font-extrabold text-red-600 tracking-wider animate-bounce-slow">
+      Campus Connect
+    </h1>
+
+    {}
+    <p className="text-xl text-gray-700 mt-4 italic">
+      "Welcome to the next level"
+    </p>
+
+    {}
+    <div className="h-2 w-32 bg-red-200 rounded-full overflow-hidden mt-8">
+        <div className="h-full bg-red-600 w-1/4 animate-loading-bar"></div>
+    </div>
+  </div>
+);
+
 interface RouteSchedule {
     route: string;
     toUniversity: string;
     fromUniversity: string;
-    nextBus?: string; // ✅ Added this line
+    nextBus?: string;
 }
 
 const schedules: RouteSchedule[] = [
@@ -55,9 +85,12 @@ const parseTime = (timeStr: string) => {
 const HomePage: React.FC = () => {
     const [nextBuses, setNextBuses] = useState<RouteSchedule[]>([]);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
+
         const now = new Date();
-        const day = now.getDay(); // 0=Sunday ... 6=Saturday
+        const day = now.getDay();
         const minutesNow = now.getHours() * 60 + now.getMinutes();
 
         const upcoming = schedules.map((s) => {
@@ -74,12 +107,21 @@ const HomePage: React.FC = () => {
             return { ...s, nextBus };
         });
 
-        setNextBuses(upcoming);
+        const timer = setTimeout(() => {
+            setNextBuses(upcoming);
+            setIsLoading(false); 
+        }, 1500);
+
+        return () => clearTimeout(timer);
     }, []);
+
+    if (isLoading) {
+        return <LoadingScreen />;
+    }
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Banner Section */}
+            {}
             <div className="relative w-full h-[300px] md:h-[400px] lg:h-[450px] mt-16 overflow-hidden">
                 <Image
                     src="/static/loginpagebanner.png"
@@ -95,10 +137,10 @@ const HomePage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Dashboard Overview */}
+            {}
             <div className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 py-12">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                    {/* Total Trips */}
+                    {}
                     <div className="bg-white shadow-md rounded-2xl p-6 flex flex-col justify-between">
                         <div>
                             <p className="text-gray-500 text-sm mb-2">Total Trips Today</p>
@@ -107,7 +149,7 @@ const HomePage: React.FC = () => {
                         <span className="text-blue-600 font-semibold mt-4">+12%</span>
                     </div>
 
-                    {/* Passengers Today */}
+                    {}
                     <div className="bg-white shadow-md rounded-2xl p-6 flex flex-col justify-between">
                         <div>
                             <p className="text-gray-500 text-sm mb-2">Passengers Today</p>
@@ -118,7 +160,7 @@ const HomePage: React.FC = () => {
                         </span>
                     </div>
 
-                    {/* Active Buses */}
+                    {}
                     <div className="bg-white shadow-md rounded-2xl p-6 flex flex-col justify-between">
                         <div>
                             <p className="text-gray-500 text-sm mb-2">Active Buses</p>
@@ -129,7 +171,7 @@ const HomePage: React.FC = () => {
                         </span>
                     </div>
 
-                    {/* Total Stops */}
+                    {}
                     <div className="bg-white shadow-md rounded-2xl p-6 flex flex-col justify-between">
                         <div>
                             <p className="text-gray-500 text-sm mb-2">Total Stops</p>
@@ -141,7 +183,7 @@ const HomePage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Next Bus Reminder Table */}
+                {}
                 <div className="bg-white shadow-md rounded-3xl p-8 mt-6">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
                         🚌 Next Bus Reminder
