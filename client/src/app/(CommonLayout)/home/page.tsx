@@ -2,37 +2,21 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-
 import { Bus, Users, MapPin, Clock, ArrowUpRight } from "lucide-react"; 
-
-const LoadingScreen = () => (
-    <div className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center space-y-6">
-      <div className="w-24 h-24 relative">
-        <Image
-          src="/static/logo.png"
-          alt="Campus Connect Logo"
-          fill
-          className="object-contain animate-pulse"
-          sizes="96px"
-        />
-      </div>
-      <h1 className="text-4xl font-extrabold text-red-600 tracking-wider animate-bounce-slow">
-        Campus Connect
-      </h1>
-      <p className="text-xl text-gray-700 mt-4 italic">
-        "Welcome to the next level"
-      </p>
-      <div className="h-2 w-32 bg-red-200 rounded-full overflow-hidden mt-8">
-          <div className="h-full bg-red-600 w-1/4 animate-loading-bar"></div>
-      </div>
-    </div>
-);
 
 interface RouteSchedule {
     route: string;
     toUniversity: string;
     fromUniversity: string;
     nextBus?: string;
+}
+
+interface StatCardProps {
+    title: string;
+    value: string;
+    icon: React.ReactNode;
+    footerText: React.ReactNode; 
+    color: string;
 }
 
 const schedules: RouteSchedule[] = [
@@ -77,18 +61,11 @@ const parseTime = (timeStr: string) => {
     return h * 60 + (minute || 0);
 };
 
-interface StatCardProps {
-    title: string;
-    value: string;
-    icon: React.ReactNode;
-    footerText: React.ReactNode; 
-    color: string;
-}
-
 const StatCard: React.FC<StatCardProps> = ({ title, value, icon, footerText, color }) => (
     <div className={`bg-white shadow-xl rounded-2xl p-6 border-l-4 border-${color}-600 transform hover:scale-[1.02] transition-transform duration-300`}>
         <div className="flex items-center justify-between">
             <p className="text-gray-500 font-semibold text-sm uppercase">{title}</p>
+            {}
             <div className={`p-2 rounded-full bg-${color}-100 text-${color}-600`}>{icon}</div> 
         </div>
         <h2 className="text-4xl font-extrabold text-gray-900 mt-2">{value}</h2>
@@ -104,15 +81,18 @@ const HomePage: React.FC = () => {
 
     useEffect(() => {
         const now = new Date();
-        const day = now.getDay();
+        const day = now.getDay(); 
         const minutesNow = now.getHours() * 60 + now.getMinutes();
 
         const upcoming = schedules.map((s) => {
             const timePartsTo = s.toUniversity.split(" ");
             const timePartsFrom = s.fromUniversity.split(" ");
             
-            const toTime = parseTime(timePartsTo[0] + " " + timePartsTo[1]);
-            const fromTime = parseTime(timePartsFrom[0] + " " + timePartsFrom[1]);
+            const toTimeStr = timePartsTo.slice(0, 2).join(" ");
+            const fromTimeStr = timePartsFrom.slice(0, 2).join(" ");
+
+            const toTime = parseTime(toTimeStr);
+            const fromTime = parseTime(fromTimeStr);
 
             const nextBus =
                 day === 0 && minutesNow < toTime
@@ -124,6 +104,7 @@ const HomePage: React.FC = () => {
             return { ...s, nextBus };
         });
 
+       
         const timer = setTimeout(() => {
             setNextBuses(upcoming);
             setIsLoading(false);
@@ -131,10 +112,6 @@ const HomePage: React.FC = () => {
 
         return () => clearTimeout(timer);
     }, []);
-
-    if (isLoading) {
-        return <LoadingScreen />;
-    }
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -145,7 +122,6 @@ const HomePage: React.FC = () => {
                     alt="Campus Banner"
                     width={1600}
                     height={700}
-                   
                     className="w-full h-full object-cover shadow-inner transition-all duration-500" 
                     priority
                 />
@@ -161,8 +137,9 @@ const HomePage: React.FC = () => {
 
             {}
             <div className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 py-12 -mt-16 relative z-10">
+                
+                {}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-                    {}
                     <StatCard 
                         title="Total Trips Today"
                         value="1,234"
@@ -170,8 +147,6 @@ const HomePage: React.FC = () => {
                         footerText={<><ArrowUpRight className="w-4 h-4 mr-1" /> +12% from Yesterday</>}
                         color="blue"
                     />
-
-                    {}
                     <StatCard 
                         title="Total Passengers"
                         value="5,678"
@@ -179,8 +154,6 @@ const HomePage: React.FC = () => {
                         footerText={<span className="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Active Routes</span>}
                         color="green"
                     />
-
-                    {}
                     <StatCard 
                         title="Active Buses"
                         value="3/4"
@@ -188,8 +161,6 @@ const HomePage: React.FC = () => {
                         footerText="Last updated 2 min ago"
                         color="red"
                     />
-
-                    {}
                     <StatCard 
                         title="Total Stops"
                         value="13"
@@ -216,7 +187,7 @@ const HomePage: React.FC = () => {
                             <tbody>
                                 {nextBuses.map((bus, idx) => {
                                     const isActive = bus.nextBus !== "No bus today";
-                                    const direction = bus.nextBus?.includes("University") ? "To Varsity" : "From Varsity";
+                                    const direction = bus.nextBus?.includes("University") ? "To Varsity" : "From Varsity"; 
                                     
                                     return (
                                         <tr
@@ -227,8 +198,10 @@ const HomePage: React.FC = () => {
                                                 <MapPin className="w-4 h-4 text-red-500" /> {bus.route}
                                             </td>
                                             <td className="py-4 px-6 text-lg font-bold text-red-600">
+                                                {}
                                                 {bus.nextBus?.split(" ")[0] || "N/A"}
                                                 <span className="text-sm font-medium text-gray-500 ml-2">
+                                                    {}
                                                     {bus.nextBus?.split(" ").slice(1).join(" ") || ""}
                                                 </span>
                                             </td>
@@ -253,7 +226,6 @@ const HomePage: React.FC = () => {
                     <p className="text-center text-sm text-gray-500 mt-6">
                         Timings are calculated for today, {new Date().toDateString()}.
                     </p>
-
                 </div>
             </div>
         </div>
