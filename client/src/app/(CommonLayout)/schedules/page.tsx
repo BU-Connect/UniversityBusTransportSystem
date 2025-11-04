@@ -1,12 +1,14 @@
 "use client";
 
-import { MapPin, Expand, Clock } from "lucide-react";
+import { MapPin, Expand, Minimize2, Clock } from "lucide-react";
 import React, { useState } from "react";
+import RouteSelector from "./RouteSelector";
 
 type Schedule = {
   fromCity: { [time: string]: string[] };
   fromUniversity: { [time: string]: string[] };
 };
+
 
 const schedules: Record<string, Schedule> = {
   "Barishal Club": {
@@ -131,13 +133,52 @@ const schedules: Record<string, Schedule> = {
   },
 };
 
-interface ScheduleTableProps {
-  route: string;
-  data: Schedule;
-  isModal?: boolean;
-}
+// ---------- Mobile List Component ----------
+const MobileScheduleList: React.FC<{ route: string; data: Schedule }> = ({ route, data }) => (
+  <div className="space-y-6">
+    <div>
+      <h3 className="text-lg font-bold text-red-600 mb-4 flex items-center gap-2">
+        <MapPin className="w-4 h-4" /> University ➜ {route}
+      </h3>
+      <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+        {Object.entries(data.fromUniversity).map(([time, buses]) => (
+          <div key={time} className="flex justify-between items-start">
+            <span className="font-medium text-gray-800 min-w-[80px]">{time}</span>
+            <span className="text-sm text-gray-700 flex-1 ml-4">
+              {buses.join(", ")}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div>
+      <h3 className="text-lg font-bold text-red-600 mb-4 flex items-center gap-2">
+        <MapPin className="w-4 h-4" /> {route} ➜ University
+      </h3>
+      <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+        {Object.entries(data.fromCity).map(([time, buses]) => (
+          <div key={time} className="flex justify-between items-start">
+            <span className="font-medium text-gray-800 min-w-[80px]">{time}</span>
+            <span className="text-sm text-gray-700 flex-1 ml-4">
+              {buses.join(", ")}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
 
-const ScheduleTable: React.FC<ScheduleTableProps> = ({ route, data, isModal = false }) => {
+// ---------- Desktop Table Component ----------
+const DesktopScheduleTable: React.FC<{ 
+  route: string; 
+  data: Schedule; 
+  fullView?: boolean;
+}> = ({
+  route,
+  data,
+  fullView = false,
+}) => {
   const uniTimes = Object.keys(data.fromUniversity);
   const cityTimes = Object.keys(data.fromCity);
   const maxRows = Math.max(uniTimes.length, cityTimes.length);
@@ -154,8 +195,13 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ route, data, isModal = fa
   });
 
   return (
-
-    <div className={`overflow-x-auto ${!isModal ? 'max-h-[300px] lg:max-h-[350px] overflow-y-auto border border-gray-200 rounded-lg' : ''}`}>
+    <div
+      className={`overflow-x-auto ${
+        fullView
+          ? "border border-gray-200 rounded-lg"
+          : "max-h-[300px] lg:max-h-[350px] overflow-y-auto border border-gray-200 rounded-lg"
+      }`}
+    >
       <table className="min-w-full text-left border-collapse">
         <thead>
           <tr className="bg-red-600 text-white sticky top-0 shadow-md">
@@ -179,17 +225,28 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ route, data, isModal = fa
           {rows.map((row, idx) => (
             <tr
               key={idx}
-              className={`${idx % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-red-50 transition`}
+              className={`${
+                idx % 2 === 0 ? "bg-white" : "bg-gray-50"
+              } hover:bg-red-50 transition`}
             >
-              {}
-              <td className="py-3 px-4 font-medium text-gray-800 border-r border-gray-100">{row.uniTime}</td>
-              <td className="py-3 px-4 text-gray-700 text-sm border-r border-gray-100">{row.uniBuses.length > 0 ? row.uniBuses[0] : ''}</td>
-              <td className="py-3 px-4 text-gray-500 text-xs border-r border-gray-100">{row.uniBuses.length > 1 ? `(${row.uniBuses.slice(1).join(', ')})` : ''}</td>
-              
-              {}
-              <td className="py-3 px-4 font-medium text-gray-800 border-r border-gray-100">{row.cityTime}</td>
-              <td className="py-3 px-4 text-gray-700 text-sm border-r border-gray-100">{row.cityBuses.length > 0 ? row.cityBuses[0] : ''}</td>
-              <td className="py-3 px-4 text-gray-500 text-xs">{row.cityBuses.length > 1 ? `(${row.cityBuses.slice(1).join(', ')})` : ''}</td>
+              <td className="py-3 px-4 font-medium text-gray-800 border-r border-gray-100">
+                {row.uniTime}
+              </td>
+              <td className="py-3 px-4 text-gray-700 text-sm border-r border-gray-100">
+                {row.uniBuses.length > 0 ? row.uniBuses[0] : ""}
+              </td>
+              <td className="py-3 px-4 text-gray-500 text-xs border-r border-gray-100">
+                {row.uniBuses.length > 1 ? `(${row.uniBuses.slice(1).join(", ")})` : ""}
+              </td>
+              <td className="py-3 px-4 font-medium text-gray-800 border-r border-gray-100">
+                {row.cityTime}
+              </td>
+              <td className="py-3 px-4 text-gray-700 text-sm border-r border-gray-100">
+                {row.cityBuses.length > 0 ? row.cityBuses[0] : ""}
+              </td>
+              <td className="py-3 px-4 text-gray-500 text-xs">
+                {row.cityBuses.length > 1 ? `(${row.cityBuses.slice(1).join(", ")})` : ""}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -198,106 +255,91 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ route, data, isModal = fa
   );
 };
 
-interface ModalProps {
-    route: string;
-    data: Schedule;
-    onClose: () => void;
-}
+// ---------- Schedule Display Component ----------
+const ScheduleDisplay: React.FC<{ 
+  route: string; 
+  data: Schedule; 
+  fullView: boolean;
+}> = ({ route, data, fullView }) => (
+  <>
+    {/* Mobile View */}
+    <div className="block sm:hidden">
+      <MobileScheduleList route={route} data={data} />
+    </div>
+    
+    {/* Desktop View */}
+    <div className="hidden sm:block">
+      <DesktopScheduleTable route={route} data={data} fullView={fullView} />
+    </div>
+  </>
+);
 
-const FullScheduleModal: React.FC<ModalProps> = ({ route, data, onClose }) => {
-    return (
-        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
-            {}
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl overflow-hidden flex flex-col"> 
-                <div className="p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
-                    <h2 className="text-2xl font-bold text-red-600">
-                        Full Schedule: {route}
-                    </h2>
-                    <button
-                        onClick={onClose}
-                        className="text-gray-500 hover:text-red-600 transition p-2 text-3xl leading-none"
-                        aria-label="Close modal"
-                    >
-                        &times;
-                    </button>
-                </div>
-                {}
-                <div className="p-6"> 
-                    <ScheduleTable route={route} data={data} isModal={true} />
-                </div>
-                <div className="p-4 border-t sticky bottom-0 bg-white z-10 text-right">
-                    <button
-                        onClick={onClose}
-                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                    >
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-};
-
+// ---------- Main Page ----------
 export default function BusSchedulePage() {
-    const [modalData, setModalData] = useState<{ route: string; data: Schedule } | null>(null);
+  const routeNames = Object.keys(schedules);
+  const [selectedRoute, setSelectedRoute] = useState<string>(routeNames[0]);
+  const [fullView, setFullView] = useState<boolean>(false);
 
-    const openModal = (route: string, data: Schedule) => {
-        setModalData({ route, data });
-    };
+  const activeRoute = schedules[selectedRoute];
 
-    const closeModal = () => {
-        setModalData(null);
-    };
+  return (
+    <div className="min-h-screen bg-gray-50 pt-24 sm:pt-32 pb-6 px-4 sm:py-12 sm:px-6 flex flex-col items-center">
+      <div className="max-w-6xl w-full">
+        <h1 className="text-2xl sm:text-4xl font-bold text-red-600 text-center mb-2">
+          UBTS Bus Schedule
+        </h1>
+        <p className="text-gray-600 text-center mb-6 sm:mb-10 text-sm sm:text-base">
+          View departure and arrival times for all routes between city locations
+          and the university.
+        </p>
 
-    return (
-        <div className="min-h-screen bg-gray-50 py-12 px-6 flex flex-col items-center">
-            {}
-            <br /><br />
-            <div className="max-w-6xl w-full">
-                <h1 className="text-4xl font-bold text-red-600 text-center mb-2">
-                    UBTS Bus Schedule
-                </h1>
-                <p className="text-gray-600 text-center mb-10">
-                    View departure and arrival times for all routes between city locations
-                    and the university.
-                </p>
+        <RouteSelector
+          routes={routeNames}
+          selectedRoute={selectedRoute}
+          onSelect={setSelectedRoute}
+        />
 
-                {Object.entries(schedules).map(([route, data]) => (
-                    <div key={route} className="mb-16 bg-white rounded-3xl shadow p-6">
-                        <div className="flex justify-between items-center mb-6 border-b pb-4">
-                            <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
-                                <MapPin className="text-red-600 w-6 h-6" /> {route} Route
-                            </h2>
-                            <button
-                                onClick={() => openModal(route, data)}
-                                className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 border border-red-200 rounded-full hover:bg-red-100 transition text-sm font-medium"
-                            >
-                                <Expand className="w-4 h-4" /> Show Full Schedule
-                            </button>
-                        </div>
-                        
-                        <ScheduleTable route={route} data={data} />
-
-                    </div>
-                ))}
-
-                <div className="text-center mt-10 text-gray-500 text-sm flex flex-col items-center">
-                    <Clock className="text-red-600 mb-1" size={18} />
-                    <p>
-                        Last updated: {new Date().toLocaleDateString()} | Data sourced from
-                        UBTS official schedule
-                    </p>
-                </div>
+        {activeRoute ? (
+          <div className="mb-8 sm:mb-16 bg-white rounded-2xl sm:rounded-3xl shadow p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 border-b pb-2 sm:pb-4">
+              <h2 className="text-xl sm:text-3xl font-bold text-gray-900 flex items-center gap-2 mb-2 sm:mb-0">
+                <MapPin className="text-red-600 w-5 h-5 sm:w-6 sm:h-6" /> {selectedRoute} Route
+              </h2>
+              <button
+                onClick={() => setFullView(!fullView)}
+                className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-red-50 text-red-600 border border-red-200 rounded-full hover:bg-red-100 transition text-xs sm:text-sm font-medium self-start sm:self-auto"
+              >
+                {fullView ? (
+                  <>
+                    <Minimize2 className="w-3 h-3 sm:w-4 sm:h-4" /> Show Compact
+                  </>
+                ) : (
+                  <>
+                    <Expand className="w-3 h-3 sm:w-4 sm:h-4" /> Show Full Schedule
+                  </>
+                )}
+              </button>
             </div>
+            <ScheduleDisplay 
+              route={selectedRoute} 
+              data={activeRoute} 
+              fullView={fullView} 
+            />
+          </div>
+        ) : (
+          <div className="text-center text-gray-500 mt-10 sm:mt-20">
+            <p className="text-base sm:text-lg">🚍 Please select a route above to view its schedule.</p>
+          </div>
+        )}
 
-            {}
-            {modalData && (
-                <FullScheduleModal
-                    route={modalData.route}
-                    data={modalData.data}
-                    onClose={closeModal}
-                />
-            )}
+        <div className="text-center mt-6 sm:mt-10 text-gray-500 text-xs sm:text-sm flex flex-col items-center">
+          <Clock className="text-red-600 mb-1" size={16} />
+          <p>
+            Last updated: {new Date().toLocaleDateString()} | Data sourced from UBTS
+            official schedule
+          </p>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
