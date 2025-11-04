@@ -19,7 +19,7 @@ import {
 } from 'react-icons/fa';
 import NextImage from '@/components/common/NextImage';
 
-// FAQ component (module scope)
+// ---------------- FAQ Component ----------------
 function FAQ() {
   const items: Array<{ q: string; a: string }> = [
     {
@@ -36,7 +36,7 @@ function FAQ() {
     },
   ];
 
-  const [open, setOpen] = useState(0 as number | null);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
     <div className="space-y-3">
@@ -48,10 +48,16 @@ function FAQ() {
             aria-expanded={open === idx}
           >
             <span className="text-gray-800 font-medium">{it.q}</span>
-            <FaChevronDown
-              className={`text-gray-500 transition-transform ${open === idx ? 'rotate-180' : ''}`}
-            />
+            {/* Use span wrapper for rotation to satisfy TypeScript */}
+            <span
+              className={`inline-block transition-transform duration-200 ${
+                open === idx ? 'rotate-180' : 'rotate-0'
+              } text-gray-500`}
+            >
+              <FaChevronDown />
+            </span>
           </button>
+
           {open === idx && <div className="p-4 bg-gray-50 text-gray-600">{it.a}</div>}
         </article>
       ))}
@@ -59,6 +65,7 @@ function FAQ() {
   );
 }
 
+// ---------------- Contact Page ----------------
 const ContactPage: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -94,7 +101,7 @@ const ContactPage: React.FC = () => {
       <main className="max-w-7xl mx-auto px-6 py-16">
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* Left: form card */}
-          <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+          <div id="contact-form" className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
             {!submitted ? (
               <>
                 <h2 className="text-3xl font-bold text-gray-800 mb-2">Send a Message</h2>
@@ -107,7 +114,7 @@ const ContactPage: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <label className="block">
                       <span className="text-sm text-gray-700 inline-flex items-center gap-2">
-                        <FaUser className="text-red-600" /> Full name
+                        <span className="text-red-600"><FaUser /></span> Full name
                       </span>
                       <input
                         value={name}
@@ -121,7 +128,7 @@ const ContactPage: React.FC = () => {
 
                     <label className="block">
                       <span className="text-sm text-gray-700 inline-flex items-center gap-2">
-                        <FaEnvelope className="text-red-600" /> Email
+                        <span className="text-red-600"><FaEnvelope /></span> Email
                       </span>
                       <input
                         type="email"
@@ -137,7 +144,7 @@ const ContactPage: React.FC = () => {
 
                   <label className="block">
                     <span className="text-sm text-gray-700 inline-flex items-center gap-2">
-                      <FaBus className="text-red-600" /> Message
+                      <span className="text-red-600"><FaBus /></span> Message
                     </span>
                     <textarea
                       value={message}
@@ -152,7 +159,7 @@ const ContactPage: React.FC = () => {
 
                   <div className="flex items-center justify-between gap-4">
                     <div className="text-sm text-gray-500">
-                      <FaClock className="inline mr-2 text-red-600" />
+                      <span className="inline mr-2 text-red-600"><FaClock /></span>
                       Typical response within 24 hours
                     </div>
 
@@ -169,7 +176,7 @@ const ContactPage: React.FC = () => {
             ) : (
               <div className="text-center py-12">
                 <h3 className="text-2xl font-semibold text-gray-800 flex items-center justify-center gap-2">
-                  <FaBus className="text-red-600" /> Thank you, {name.split(' ')[0] || 'User'}!
+                  <span className="text-red-600"><FaBus /></span> Thank you, {name.split(' ')[0] || 'User'}!
                 </h3>
                 <p className="text-gray-600 mt-3">
                   We have received your message. Our team will reply to{' '}
@@ -194,7 +201,7 @@ const ContactPage: React.FC = () => {
           <aside className="space-y-6">
             <div className="bg-gradient-to-r from-red-50 to-white rounded-2xl p-6 shadow-md border border-gray-100">
               <h4 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                <FaMapMarkerAlt className="text-red-600" /> UBTS Office
+                <span className="text-red-600"><FaMapMarkerAlt /></span> UBTS Office
               </h4>
               <p className="text-gray-600 mt-2">University of Barishal Campus</p>
 
@@ -222,16 +229,16 @@ const ContactPage: React.FC = () => {
 
             <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
               <h4 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                <FaQuestionCircle className="text-red-600" /> Quick links
+                <span className="text-red-600"><FaQuestionCircle /></span> Quick links
               </h4>
               <div className="mt-4 grid grid-cols-1 gap-2">
-                <a href="#routes" className="text-gray-700 hover:text-red-600">
+                <a id="routes" href="#routes" className="text-gray-700 hover:text-red-600">
                   View Bus Routes
                 </a>
-                <a href="#dashboard" className="text-gray-700 hover:text-red-600">
+                <a id="dashboard" href="#dashboard" className="text-gray-700 hover:text-red-600">
                   Driver Dashboard
                 </a>
-                <a href="#help" className="text-gray-700 hover:text-red-600">
+                <a id="help" href="#help" className="text-gray-700 hover:text-red-600">
                   Help Center
                 </a>
               </div>
@@ -259,6 +266,8 @@ const ContactPage: React.FC = () => {
             </div>
           </aside>
         </section>
+
+        {/* Map Section */}
         <div className="bg-white mt-10 rounded-2xl p-6 shadow-md border w-full border-gray-100">
           <h4 className="text-lg font-semibold text-gray-800">Map</h4>
           <div className="mt-4 rounded-md overflow-hidden border border-gray-100">
@@ -272,47 +281,45 @@ const ContactPage: React.FC = () => {
             </div>
           </div>
         </div>
+
         {/* Support topics + FAQ */}
         <section className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             <h3 className="text-2xl font-semibold text-gray-800">Support topics</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl border border-gray-100 shadow-sm bg-white">
-                <h4 className="font-medium text-gray-800">Route & Scheduling</h4>
-                <p className="text-sm text-gray-600 mt-2">
-                  Questions about bus timings, delays, and route changes.
-                </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors">
+                <a href="#bus-schedules" className="text-gray-800 font-medium hover:text-red-600">
+                  Bus Schedules
+                </a>
+                <p className="text-sm text-gray-600 mt-1">View and download daily routes.</p>
               </div>
-              <div className="p-4 rounded-xl border border-gray-100 shadow-sm bg-white">
-                <h4 className="font-medium text-gray-800">Technical Issues</h4>
-                <p className="text-sm text-gray-600 mt-2">
-                  App crashes, GPS tracking problems or account issues.
-                </p>
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors">
+                <a href="#route-updates" className="text-gray-800 font-medium hover:text-red-600">
+                  Route Updates
+                </a>
+                <p className="text-sm text-gray-600 mt-1">Latest changes to stops and timings.</p>
               </div>
-              <div className="p-4 rounded-xl border border-gray-100 shadow-sm bg-white">
-                <h4 className="font-medium text-gray-800">Feedback & Suggestions</h4>
-                <p className="text-sm text-gray-600 mt-2">
-                  Share ideas to improve UBTS services and the app experience.
-                </p>
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors">
+                <a href="#app-issues" className="text-gray-800 font-medium hover:text-red-600">
+                  App Issues
+                </a>
+                <p className="text-sm text-gray-600 mt-1">Troubleshooting for mobile app.</p>
               </div>
-              <div className="p-4 rounded-xl border border-gray-100 shadow-sm bg-white">
-                <h4 className="font-medium text-gray-800">Lost & Found</h4>
-                <p className="text-sm text-gray-600 mt-2">
-                  Report lost items or coordinate pickup with staff.
-                </p>
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors">
+                <a href="#lost-items" className="text-gray-800 font-medium hover:text-red-600">
+                  Lost Items
+                </a>
+                <p className="text-sm text-gray-600 mt-1">Report and claim process.</p>
               </div>
             </div>
           </div>
 
-          {/* FAQ */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-semibold text-gray-800">Frequently asked</h3>
+          <div className="lg:col-span-1">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Frequently Asked Questions</h3>
             <FAQ />
           </div>
         </section>
       </main>
-
-      {/* FAQ (module-level component is used above) */}
     </div>
   );
 };
