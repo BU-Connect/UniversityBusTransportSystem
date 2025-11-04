@@ -1,1 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import "tailwindcss";
+
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+.animate-fade-in-slow {
+  animation: fadeIn 2s ease-out forwards;
+}
+
+@keyframes bounceSlow {
+  0%, 100% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+.animate-bounce-slow {
+  animation: bounceSlow 2s infinite;
+}
+
+@keyframes loadingBar {
+  0% { width: 0%; }
+  50% { width: 100%; }
+  100% { width: 0%; }
+}
+.animate-loading-bar {
+  animation: loadingBar 2s ease-in-out infinite;
+}
+
+@keyframes vibrate {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-1px, 1px) scale(1.01); }
+  50% { transform: translate(1px, -1px) scale(1); }
+  75% { transform: translate(-1px, 1px) scale(1.01); }
+}
+.animate-vibrate-slow {
+  animation: vibrate 3s ease-in-out infinite;
+}
+
+@keyframes blob1 {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+  33% { transform: translateY(-20px) translateX(20px) scale(1.1); }
+  66% { transform: translateY(20px) translateX(-20px) scale(0.9); }
+}
+@keyframes blob2 {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+  33% { transform: translateY(30px) translateX(-30px) scale(0.95); }
+  66% { transform: translateY(-30px) translateX(30px) scale(1.05); }
+}
+.animate-blob-1 {
+  animation: blob1 12s infinite ease-in-out;
+}
+.animate-blob-2 {
+  animation: blob2 15s infinite reverse ease-in-out;
+}
+
+.bg-pattern-light {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
