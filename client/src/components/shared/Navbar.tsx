@@ -2,16 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation"; // 💡 FIX: Switched to App Router navigation
+import { useIntro } from "@/context/IntroContext"; 
 import { useUser } from "@/context/UserContext";
 import { logOutUser } from "@/services/AuthServices";
 import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
+  const { isIntroActive } = useIntro(); // <-- Read Intro state
+
   const { user, setIsLoading } = useUser();
-  const pathName = usePathname();
-  const router = useRouter();
+  const pathName = usePathname(); // 💡 FIX: Use usePathname() directly
+  const router = useRouter(); 
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // 🚨 If isIntroActive is true, return null immediately to hide the Navbar
+  if (isIntroActive) {
+    return null;
+  }
 
   const handleLogout = async () => {
     await logOutUser();
@@ -48,14 +56,14 @@ export default function Navbar() {
   return (
     <header className="w-full bg-white border-b-2 border-red-600 fixed left-0 right-0 top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-16">
-        {}
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl font-bold text-red-600">
             Campus Connect
           </span>
         </Link>
 
-        {}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           <Link href="/home" className={getLinkClasses("/home")}>
             Home
@@ -79,7 +87,7 @@ export default function Navbar() {
             Contact Us
           </Link>
 
-          {}
+          {/* Auth Button */}
           {!user ? (
             <Link
               href="/login"
@@ -92,7 +100,7 @@ export default function Navbar() {
               <button className="flex items-center gap-2 px-4 py-2 bg-red-50 border border-red-200 rounded-full hover:bg-red-100 transition">
                 <span className="text-red-700 font-medium">{user.name}</span>
               </button>
-              {}
+              {/* Dropdown Menu */}
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:visible invisible transition">
                 <Link
                   href="/profile"
@@ -117,7 +125,7 @@ export default function Navbar() {
           )}
         </nav>
 
-        {}
+        {/* Mobile Menu Button */}
         <button
           className="md:hidden flex items-center text-red-600"
           onClick={toggleMenu}
@@ -126,10 +134,10 @@ export default function Navbar() {
         </button>
       </div>
 
-      {}
+      {/* Mobile Menu Dropdown */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 flex flex-col space-y-1 px-4 py-3">
-          {}
+          {/* Mobile Links */}
           <Link
             href="/home"
             onClick={toggleMenu}
@@ -166,6 +174,7 @@ export default function Navbar() {
             Contact Us
           </Link>
 
+          {/* Mobile Auth */}
           {!user ? (
             <Link
               href="/login"
