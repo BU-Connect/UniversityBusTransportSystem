@@ -77,7 +77,7 @@ export default function RoutePage() {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-red-50 via-white to-red-100 py-12 px-6 flex flex-col items-center overflow-hidden">
       
-      {/* Background Water Wave Effect (Maroon, Shaky Animation) */}
+      {}
       <div className="absolute inset-0 overflow-hidden z-0">
         <style jsx global>{`
           /* Custom CSS keyframes for the continuous background shake */
@@ -98,7 +98,7 @@ export default function RoutePage() {
             animation: shake 0.5s infinite alternate;
           }
         `}</style>
-        {/* Maroon radial gradient with the fast shake animation */}
+        {}
         <div className="absolute w-[200%] h-[200%] bg-[radial-gradient(circle_at_center,rgba(128,0,0,0.15)_0%,transparent_70%)] animate-shaky-wave" />
       </div>
 
@@ -130,12 +130,12 @@ export default function RoutePage() {
               key={route.name}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              // FIX: Use type: "tween" for multiple rotation keyframes to avoid Framer Motion error
+              
               whileHover={{ scale: 1.05, rotate: [-1, 1, -1, 1, 0] }} 
               transition={{
                 duration: 0.6,
                 delay: index * 0.1,
-                type: "tween", // Solves the "Only two keyframes currently supported with spring..." error
+                type: "tween", 
                 ease: "easeInOut" 
               }}
               viewport={{ once: true, amount: 0.3 }}

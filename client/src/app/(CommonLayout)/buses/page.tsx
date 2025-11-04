@@ -164,7 +164,7 @@ const BusCard: React.FC<{ info: BusInfo }> = ({ info }) => {
 
   return (
     <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-lg hover:shadow-red-300 transition-all duration-500 hover:-translate-y-2 group">
-      {/* Image */}
+      {}
       <div className="relative h-48 w-full overflow-hidden">
         <Image
           src={info.imageSrc}
@@ -176,7 +176,7 @@ const BusCard: React.FC<{ info: BusInfo }> = ({ info }) => {
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-maroon-900/80 to-transparent h-20"></div>
       </div>
 
-      {/* Content */}
+      {}
       <div className="p-6 relative z-10">
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-2xl font-extrabold text-gray-900 flex items-center gap-2">
@@ -221,15 +221,15 @@ const BusCard: React.FC<{ info: BusInfo }> = ({ info }) => {
 export default function BusesPage() {
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* 🌊 Animated wave background */}
+      {}
       <div className="absolute inset-0 bg-gradient-to-b from-[#6a0f1a] via-[#8b1c24] to-[#b02a37] animate-gradient overflow-hidden">
         <div className="absolute bottom-0 left-0 w-full h-40 bg-[url('/static/wave.svg')] bg-repeat-x animate-wave opacity-30"></div>
         <div className="absolute bottom-0 left-0 w-full h-48 bg-[url('/static/wave.svg')] bg-repeat-x animate-wave-slow opacity-50"></div>
       </div>
 
-      {/* Main Content */}
+      {}
       <div className="relative z-10 pt-20 pb-16 px-6 md:px-10 max-w-7xl mx-auto text-white">
-        {/* Header */}
+        {}
         <header className="text-center mb-12">
           <h1 className="text-5xl font-extrabold text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)] mb-3">
             Meet Our Fleet
@@ -240,14 +240,14 @@ export default function BusesPage() {
           </p>
         </header>
 
-        {/* Cards Grid */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {ALL_BUSES_INFO.map((bus) => (
             <BusCard key={bus.name} info={bus} />
           ))}
         </div>
 
-        {/* Footer note */}
+        {}
         <div className="mt-16 text-center text-sm text-red-200 border-t border-red-300/20 pt-6">
           <p>
             Note: Bus driver names, routes and statuses can be updated any time so stay connected to be informed.
@@ -255,7 +255,7 @@ export default function BusesPage() {
         </div>
       </div>
 
-      {/* Wave animation CSS */}
+      {}
       <style jsx>{`
         @keyframes wave {
           0% {
