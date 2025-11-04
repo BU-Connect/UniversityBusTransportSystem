@@ -1,14 +1,13 @@
-"use client"; // REQUIRED
+"use client";
 
 import Navbar from '@/components/shared/Navbar';
 import { IntroProvider } from '@/context/IntroContext';
-import React from 'react'; // REQUIRED for ReactNode
+import React from 'react';
 
 const CommonLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    // 🚨 SOLUTION: Provider wraps ALL content 🚨
     <IntroProvider> 
-        {/* Navbar and Main content are now inside the Provider */}
+        {}
         <Navbar />
         <main className="min-h-screen">
             {children}
