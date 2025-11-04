@@ -2,14 +2,24 @@
 
 import React from "react";
 import Image from "next/image";
-import { User, Phone, Bus, Clock, Calendar, Mail } from "lucide-react";
+import {
+  User,
+  Phone,
+  Bus,
+  Clock,
+  Calendar,
+  Mail,
+  Droplets,
+  Users,
+} from "lucide-react";
+import { motion } from "framer-motion";
 
 const CHIEF_INFO = {
   name: "Uzzal Hossain",
   title: "Manager (In-Charge), Office of the Registrar (Transport Pool)",
   message:
-    "x", 
-  phone: "0244821020-29", 
+    "Our transport system ensures smooth, reliable and safe commuting for all university members — connecting our campus with the city every day with care and punctuality.",
+  phone: "x",
   email: "registrar@bu.ac.bd",
   imageSrc: "/static/chief_uzzal_hossain.png",
 };
@@ -83,138 +93,153 @@ const DRIVER_STAFF_INFO: StaffInfo[] = [
 ];
 
 interface StaffCardProps {
-    member: StaffInfo;
+  member: StaffInfo;
 }
 
 const StaffCard: React.FC<StaffCardProps> = ({ member }) => (
-    <div className="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-shadow duration-300">
-        <div className="relative h-40 w-full bg-gray-100">
-            <Image
-                src={member.imageSrc}
-                alt={member.name}
-                fill
-                sizes="(max-width: 600px) 100vw, 33vw"
-                className="object-cover object-top"
-            />
-            <span className="absolute bottom-0 right-0 bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-tl-lg">
-                {member.duty}
-            </span>
-        </div>
-
-        <div className="p-5">
-            <h3 className="text-xl font-extrabold text-gray-900 mb-2">{member.name}</h3>
-
-            <div className="space-y-3 text-sm border-t pt-3 mt-3">
-                {}
-                <div className="flex items-center text-gray-700">
-                    <Calendar className="w-4 h-4 mr-2 text-red-500" />
-                    <span className="font-semibold">Service:</span>
-                    <span className="ml-1 text-gray-900 font-bold">{member.yearsOfService}</span>
-                </div>
-
-                {}
-                <div className="flex items-center text-gray-700">
-                    <Phone className="w-4 h-4 mr-2 text-red-500" />
-                    <span className="font-semibold">Contact:</span>
-                    <span className="ml-1 text-gray-900">{member.phone}</span>
-                </div>
-
-                {}
-                <div className="text-gray-700 flex items-start mt-3">
-                    <Bus className="w-4 h-4 mr-2 mt-1 text-red-500 flex-shrink-0" />
-                    <span className="font-semibold flex-shrink-0">Buses:</span>
-                    <span className="ml-1 text-gray-900 leading-tight">
-                        {member.busesDriven.join(', ')}
-                    </span>
-                </div>
-            </div>
-        </div>
+  <motion.div
+    whileHover={{ scale: 1.03 }}
+    transition={{ type: "spring", stiffness: 200 }}
+    className="bg-white/70 backdrop-blur-md border border-red-200 shadow-lg hover:shadow-red-400/30 rounded-2xl overflow-hidden transition-all duration-300"
+  >
+    <div className="relative h-48 w-full">
+      <Image
+        src={member.imageSrc}
+        alt={member.name}
+        fill
+        sizes="(max-width: 600px) 100vw, 33vw"
+        className="object-cover object-top"
+      />
+      <span className="absolute bottom-0 right-0 bg-gradient-to-r from-red-600 to-maroon-700 text-white text-xs font-semibold px-3 py-1 rounded-tl-xl shadow-md">
+        {member.duty}
+      </span>
     </div>
+
+    <div className="p-5">
+      <h3 className="text-lg font-extrabold text-maroon-700 mb-2 tracking-tight">
+        {member.name}
+      </h3>
+
+      <div className="space-y-3 text-sm border-t pt-3 mt-3">
+        <div className="flex items-center text-gray-700">
+          <Calendar className="w-4 h-4 mr-2 text-red-500" />
+          <span className="font-semibold">Service:</span>
+          <span className="ml-1 text-gray-900 font-bold">
+            {member.yearsOfService}
+          </span>
+        </div>
+
+        <div className="flex items-center text-gray-700">
+          <Phone className="w-4 h-4 mr-2 text-red-500" />
+          <span className="font-semibold">Contact:</span>
+          <span className="ml-1 text-gray-900">{member.phone}</span>
+        </div>
+
+        <div className="text-gray-700 flex items-start mt-3">
+          <Bus className="w-4 h-4 mr-2 mt-1 text-red-500 flex-shrink-0" />
+          <span className="font-semibold flex-shrink-0">Buses:</span>
+          <span className="ml-1 text-gray-900 leading-tight">
+            {member.busesDriven.join(", ")}
+          </span>
+        </div>
+      </div>
+    </div>
+  </motion.div>
 );
 
 export default function TransportPage() {
-    return (
-        <div className="min-h-screen bg-gray-50 pb-12">
-            
-            {}
-            <div className="relative w-full h-[300px] mt-16 overflow-hidden shadow-lg">
-                <Image
-                    src="/static/loginpagebanner.png"
-                    alt="University of Barishal Campus"
-                    width={1600}
-                    height={700}
-                    className="w-full h-full object-cover transition-all duration-500"
-                    priority
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <h1 className="text-5xl font-extrabold text-white uppercase tracking-wider text-center px-4">
-                        Office of the Registrar (Transport Pool)
-                    </h1>
-                </div>
-            </div>
-
-            <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
-
-                {}
-                <section className="mb-16 p-8 bg-white shadow-xl rounded-2xl border-t-4 border-red-600">
-                    <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
-                        Head of Transportation
-                    </h2>
-                    
-                    <div className="flex flex-col lg:flex-row items-center gap-8">
-                        {}
-                        <div className="relative w-40 h-40 flex-shrink-0 rounded-full overflow-hidden border-4 border-red-600 shadow-md bg-gray-100">
-                            {}
-                            <Image
-                                src={CHIEF_INFO.imageSrc}
-                                alt={CHIEF_INFO.name}
-                                fill
-                                sizes="160px"
-                                className="object-cover object-top"
-                            />
-                        </div>
-
-                        {}
-                        <div>
-                            <p className="text-2xl font-bold text-red-600">{CHIEF_INFO.name}</p>
-                            <p className="text-lg text-gray-700 mb-4">{CHIEF_INFO.title}</p>
-                            
-                            {CHIEF_INFO.message !== 'x' && (
-                                <blockquote className="italic text-gray-600 border-l-4 border-gray-300 pl-4 py-2 my-4">
-                                    {CHIEF_INFO.message}
-                                </blockquote>
-                            )}
-
-                            <div className="flex flex-wrap gap-4 text-sm text-gray-700 font-medium">
-                                <span className="flex items-center">
-                                    <Phone className="w-4 h-4 mr-1 text-red-500" /> Phone: {CHIEF_INFO.phone}
-                                </span>
-                                <span className="flex items-center">
-                                    <Mail className="w-4 h-4 mr-1 text-red-500" /> Email: {CHIEF_INFO.email}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {}
-                <section>
-                    <h2 className="text-3xl font-extrabold text-gray-900 mb-8 text-center border-b pb-4">
-                        Our Dedicated Team Members (Drivers & Staff)
-                    </h2>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {DRIVER_STAFF_INFO.map((member, index) => (
-                            <StaffCard key={index} member={member} />
-                        ))}
-                    </div>
-                    
-                    <div className="mt-12 text-center text-sm text-gray-500 border-t pt-6">
-                        <p>Note: Driver names, contact, and service history are placeholders ("x") awaiting internal data.</p>
-                    </div>
-                </section>
-                
-            </div>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-100">
+      {/* Hero Banner */}
+      <div className="relative w-full h-[320px] mt-16 overflow-hidden shadow-xl">
+        <Image
+          src="/static/loginpagebanner.png"
+          alt="University of Barishal Campus"
+          width={1600}
+          height={700}
+          className="w-full h-full object-cover transition-all duration-500"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/20 flex items-center justify-center backdrop-blur-[1px]">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="text-5xl md:text-6xl font-extrabold text-white uppercase tracking-wider text-center drop-shadow-lg"
+          >
+            Office of the Registrar <br />
+            <span className="text-red-300 font-bold">(Transport Pool)</span>
+          </motion.h1>
         </div>
-    );
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
+        {/* Head of Transportation Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16 p-8 bg-white/70 backdrop-blur-md border border-red-200 shadow-xl rounded-3xl border-t-4 border-maroon-700"
+        >
+          <h2 className="text-3xl font-extrabold text-maroon-800 mb-6 text-center">
+            <Users className="inline w-6 h-6 mr-2 text-red-500" />
+            Head of Transportation
+          </h2>
+
+          <div className="flex flex-col lg:flex-row items-center gap-8">
+            <div className="relative w-44 h-44 flex-shrink-0 rounded-full overflow-hidden border-4 border-maroon-600 shadow-lg bg-gray-100">
+              <Image
+                src={CHIEF_INFO.imageSrc}
+                alt={CHIEF_INFO.name}
+                fill
+                sizes="160px"
+                className="object-cover object-top"
+              />
+            </div>
+
+            <div>
+              <p className="text-2xl font-bold text-maroon-700">
+                {CHIEF_INFO.name}
+              </p>
+              <p className="text-lg text-gray-700 mb-4">{CHIEF_INFO.title}</p>
+
+              <blockquote className="italic text-gray-600 border-l-4 border-maroon-500 pl-4 py-2 my-4">
+                {CHIEF_INFO.message}
+              </blockquote>
+
+              <div className="flex flex-wrap gap-4 text-sm text-gray-700 font-medium">
+                <span className="flex items-center">
+                  <Phone className="w-4 h-4 mr-1 text-maroon-600" /> Phone:{" "}
+                  {CHIEF_INFO.phone}
+                </span>
+                <span className="flex items-center">
+                  <Mail className="w-4 h-4 mr-1 text-maroon-600" /> Email:{" "}
+                  {CHIEF_INFO.email}
+                </span>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Staff Members Section */}
+        <section>
+          <h2 className="text-3xl font-extrabold text-maroon-800 mb-8 text-center border-b pb-4 border-red-300">
+            🚍 Our Dedicated Team Members
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {DRIVER_STAFF_INFO.map((member, index) => (
+              <StaffCard key={index} member={member} />
+            ))}
+          </div>
+
+          <p className="mt-12 text-center text-sm text-gray-500 border-t pt-6">
+            Note: Driver names, contact, and service history are placeholders
+            ("x") awaiting internal data.
+          </p>
+        </section>
+      </div>
+    </div>
+  );
 }

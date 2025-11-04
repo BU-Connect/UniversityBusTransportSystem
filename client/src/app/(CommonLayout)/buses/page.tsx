@@ -2,15 +2,15 @@
 
 import React from "react";
 import Image from "next/image";
-import { BusFront, User, Phone, MapPin, Clock } from "lucide-react";
+import { BusFront, User, Phone, MapPin } from "lucide-react";
 
 interface BusInfo {
   name: string;
   routes: string[];
-  status: 'Running' | 'Repairing' | 'Offline' | 'x';
+  status: "Running" | "Repairing" | "Offline" | "x";
   driverName: string;
   phone: string;
-  imageSrc: string; 
+  imageSrc: string;
 }
 
 const ALL_BUSES_INFO: BusInfo[] = [
@@ -152,86 +152,151 @@ const ALL_BUSES_INFO: BusInfo[] = [
   },
 ];
 
-interface BusCardProps {
-    info: BusInfo;
-}
+const BusCard: React.FC<{ info: BusInfo }> = ({ info }) => {
+  const statusColor =
+    info.status === "Running"
+      ? "bg-green-100 text-green-700"
+      : info.status === "Repairing"
+      ? "bg-yellow-100 text-yellow-700"
+      : info.status === "Offline"
+      ? "bg-red-100 text-red-700"
+      : "bg-gray-200 text-gray-700";
 
-const BusCard: React.FC<BusCardProps> = ({ info }) => {
-    const isRunning = info.status === 'Running';
-    const statusColor = isRunning ? 'bg-green-100 text-green-700' : 
-                        info.status === 'Repairing' ? 'bg-yellow-100 text-yellow-700' :
-                        info.status === 'Offline' ? 'bg-red-100 text-red-700' :
-                        'bg-gray-200 text-gray-700';
+  return (
+    <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-lg hover:shadow-red-300 transition-all duration-500 hover:-translate-y-2 group">
+      {/* Image */}
+      <div className="relative h-48 w-full overflow-hidden">
+        <Image
+          src={info.imageSrc}
+          alt={info.name}
+          fill
+          sizes="(max-width: 600px) 100vw, 50vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+        />
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-maroon-900/80 to-transparent h-20"></div>
+      </div>
 
-    return (
-        <div className="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
-            <div className="relative h-48 w-full bg-gray-200">
-                <Image
-                    src={info.imageSrc}
-                    alt={`${info.name} Bus`}
-                    fill
-                    sizes="(max-width: 600px) 100vw, 50vw"
-                    className="object-cover"
-                />
-            </div>
-
-            <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-2xl font-extrabold text-gray-900 flex items-center gap-2">
-                        <BusFront className="text-red-600 w-6 h-6" /> {info.name}
-                    </h3>
-                    <span className={`text-xs font-bold px-3 py-1 rounded-full uppercase ${statusColor}`}>
-                        {info.status === 'x' ? 'Status N/A' : info.status}
-                    </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-y-3 gap-x-4 text-sm border-t pt-4 border-gray-100">
-                    <div className="flex items-center text-gray-700">
-                        <User className="w-4 h-4 mr-2 text-red-500" />
-                        <span className="font-semibold mr-1">Driver:</span> {info.driverName}
-                    </div>
-
-                    <div className="flex items-center text-gray-700">
-                        <Phone className="w-4 h-4 mr-2 text-red-500" />
-                        <span className="font-semibold mr-1">Phone:</span> {info.phone}
-                    </div>
-
-                    <div className="col-span-2 text-gray-700 flex items-center">
-                        <MapPin className="w-4 h-4 mr-2 text-red-500" />
-                        <span className="font-semibold mr-1">Routes:</span> {info.routes.join(', ')}
-                    </div>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-gray-100">
-                    <button className="w-full py-2 bg-red-600 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition">
-                        View Live Location
-                    </button>
-                </div>
-            </div>
+      {/* Content */}
+      <div className="p-6 relative z-10">
+        <div className="flex justify-between items-start mb-3">
+          <h3 className="text-2xl font-extrabold text-gray-900 flex items-center gap-2">
+            <BusFront className="text-red-600 w-6 h-6" /> {info.name}
+          </h3>
+          <span
+            className={`text-xs font-bold px-3 py-1 rounded-full uppercase ${statusColor}`}
+          >
+            {info.status === "x" ? "Status N/A" : info.status}
+          </span>
         </div>
-    );
+
+        <div className="space-y-3 text-sm text-gray-700">
+          <div className="flex items-center">
+            <User className="w-4 h-4 mr-2 text-maroon-600" />
+            <span className="font-semibold mr-1">Driver:</span> {info.driverName}
+          </div>
+
+          <div className="flex items-center">
+            <Phone className="w-4 h-4 mr-2 text-maroon-600" />
+            <span className="font-semibold mr-1">Phone:</span> {info.phone}
+          </div>
+
+          <div className="flex items-start">
+            <MapPin className="w-4 h-4 mr-2 mt-1 text-maroon-600" />
+            <span className="font-semibold mr-1">Routes:</span>{" "}
+            {info.routes.join(", ")}
+          </div>
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <button className="relative w-full py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-red-600 via-maroon-700 to-red-800 text-white hover:brightness-110 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+            <span className="relative z-10">View Live Location</span>
+            <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default function BusesPage() {
-    return (
-        <div className="min-h-screen bg-gray-50 py-12 px-4 md:px-6">
-            <div className="max-w-7xl mx-auto pt-16"> 
-                <header className="text-center mb-12">
-                    <h1 className="text-5xl font-extrabold text-red-600 mb-3">
-                        Meet Our Fleet
-                    </h1>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        A detailed look at the {ALL_BUSES_INFO.length} buses serving the Campus Connect network, showing their primary routes and operational status.
-                    </p>
-                </header>
+  return (
+    <div className="relative min-h-screen overflow-hidden">
+      {/* 🌊 Animated wave background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#6a0f1a] via-[#8b1c24] to-[#b02a37] animate-gradient overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-full h-40 bg-[url('/static/wave.svg')] bg-repeat-x animate-wave opacity-30"></div>
+        <div className="absolute bottom-0 left-0 w-full h-48 bg-[url('/static/wave.svg')] bg-repeat-x animate-wave-slow opacity-50"></div>
+      </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {ALL_BUSES_INFO.map((bus) => (
-                        <BusCard key={bus.name} info={bus} />
-                    ))}
-                </div>
+      {/* Main Content */}
+      <div className="relative z-10 pt-20 pb-16 px-6 md:px-10 max-w-7xl mx-auto text-white">
+        {/* Header */}
+        <header className="text-center mb-12">
+          <h1 className="text-5xl font-extrabold text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)] mb-3">
+            Meet Our Fleet
+          </h1>
+          <p className="text-lg text-red-100 max-w-3xl mx-auto">
+            Discover our 17 buses that connect the University campus with various
+            destinations.
+          </p>
+        </header>
 
-            </div>
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {ALL_BUSES_INFO.map((bus) => (
+            <BusCard key={bus.name} info={bus} />
+          ))}
         </div>
-    );
+
+        {/* Footer note */}
+        <div className="mt-16 text-center text-sm text-red-200 border-t border-red-300/20 pt-6">
+          <p>
+            Note: Bus driver names, routes and statuses can be updated any time so stay connected to be informed.
+          </p>
+        </div>
+      </div>
+
+      {/* Wave animation CSS */}
+      <style jsx>{`
+        @keyframes wave {
+          0% {
+            background-position-x: 0;
+          }
+          100% {
+            background-position-x: 1000px;
+          }
+        }
+        @keyframes wave-slow {
+          0% {
+            background-position-x: 0;
+          }
+          100% {
+            background-position-x: 1500px;
+          }
+        }
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradientShift 10s ease infinite;
+        }
+        .animate-wave {
+          animation: wave 12s linear infinite;
+          background-size: 1000px 100%;
+        }
+        .animate-wave-slow {
+          animation: wave-slow 20s linear infinite;
+          background-size: 1500px 100%;
+        }
+      `}</style>
+    </div>
+  );
 }

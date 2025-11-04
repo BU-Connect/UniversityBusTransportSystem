@@ -110,7 +110,7 @@ const HomePage: React.FC = () => {
     <div className="relative min-h-screen bg-gradient-to-br from-blue-100 via-white to-blue-50 overflow-hidden">
       {}
       <div className="absolute inset-0 overflow-hidden z-0">
-        <div className="absolute w-[200%] h-[200%] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08)_0%,transparent_70%)] animate-[wave_8s_ease-in-out_infinite_alternate]" />
+        <div className="absolute w-[200%] h-[200%] bg-[radial-gradient(circle_at_center,rgba(246, 59, 59, 0.08)_0%,transparent_70%)] animate-[wave_8s_ease-in-out_infinite_alternate]" />
       </div>
 
       {}
@@ -128,7 +128,7 @@ const HomePage: React.FC = () => {
           className="w-full h-full object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-blue-900/50 flex flex-col items-center justify-center p-4 backdrop-blur-[2px]">
+        <div className="absolute inset-0 bg-red-900/20 flex flex-col items-center justify-center p-4 backdrop-blur-[2px]">
           <h3 className="text-5xl md:text-6xl font-extrabold text-white text-center uppercase tracking-wider drop-shadow-lg">
             Campus Connect
           </h3>
@@ -192,7 +192,7 @@ const HomePage: React.FC = () => {
           className="bg-white/70 backdrop-blur-xl shadow-2xl rounded-3xl p-8 border-t-4 border-red-600"
         >
           <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center border-b pb-3 flex justify-center items-center gap-2">
-            <Clock className="w-6 h-6 text-blue-600" /> Live Next Bus Reminder
+            <Clock className="w-6 h-6 text-red-600" /> Live Next Bus Reminder
           </h2>
 
           <div className="overflow-x-auto rounded-2xl">
@@ -217,13 +217,13 @@ const HomePage: React.FC = () => {
                       whileHover={{ scale: 1.02, backgroundColor: "#f0f9ff" }}
                       transition={{ duration: 0.3 }}
                       className={`${
-                        idx % 2 === 0 ? "bg-white/80" : "bg-blue-50/70"
+                        idx % 2 === 0 ? "bg-white/80" : "bg-red-50/70"
                       } border-b border-gray-100 backdrop-blur-sm`}
                     >
                       <td className="py-4 px-6 font-semibold text-gray-800 flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-blue-500" /> {bus.route}
+                        <MapPin className="w-4 h-4 text-red-500" /> {bus.route}
                       </td>
-                      <td className="py-4 px-6 text-lg font-bold text-blue-700">
+                      <td className="py-4 px-6 text-lg font-bold text-red-700">
                         {bus.nextBus?.split(" ")[0] || "N/A"}
                         <span className="text-sm font-medium text-gray-500 ml-2">
                           {bus.nextBus?.split(" ").slice(1).join(" ") || ""}

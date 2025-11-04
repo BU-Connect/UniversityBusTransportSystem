@@ -109,7 +109,7 @@ export default function RoutePage() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl md:text-6xl font-extrabold text-red-900 text-center mb-4 tracking-tight drop-shadow-md"
+          className="text-5xl md:text-6xl font-extrabold text-red-700 text-center mb-4 tracking-tight drop-shadow-md"
         >
           University Bus Routes
         </motion.h1>
