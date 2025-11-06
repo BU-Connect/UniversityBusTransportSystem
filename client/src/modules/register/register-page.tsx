@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import InputField from "@/components/shared/InputField";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import { Home } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -154,6 +155,15 @@ const RegisterPageComponent = () => {
           </div>
         </div>
       </div>
+
+      {/*home btn*/}
+      <Link
+        href="/"
+        title="Go to Home"
+        className="fixed top-6 right-6 p-4 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-all duration-300 transform hover:scale-105 z-50"
+      >
+        <Home size={24} />
+      </Link>
     </div>
   );
 };
