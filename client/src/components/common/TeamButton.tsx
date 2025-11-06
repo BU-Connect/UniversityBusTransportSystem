@@ -101,7 +101,7 @@ const TeamButton: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ type: 'tween', duration: 0.4, ease: 'easeInOut' }}
               className="relative flex items-center justify-center w-16 h-16 rounded-full shadow-2xl bg-gradient-to-br from-[#9b111e] to-[#b91c1c] text-white hover:shadow-[#b91c1c]/60 overflow-hidden"
-              aria-label="Team HEXAGONE"
+              aria-label="Team HEXAGON"
             >
               {}
               {ripples.map((r) => (
@@ -155,7 +155,7 @@ const TeamButton: React.FC = () => {
               transition={{ type: 'tween', duration: 0.3 }}
               className="absolute left-20 bottom-5 bg-white text-[#9b111e] font-semibold text-sm px-3 py-1 rounded-full shadow-md border border-[#b91c1c]/30 backdrop-blur-sm"
             >
-              Meet HEXAGONE
+              Meet HEXAGON
             </motion.span>
           </motion.div>
 
@@ -176,7 +176,7 @@ const TeamButton: React.FC = () => {
                   className="relative max-w-6xl mx-auto bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-10 border-t-4 border-red-700"
                 >
                   <h2 className="text-3xl font-extrabold text-center text-red-800 mb-8">
-                    Meet the Team — HEXAGONE
+                    Meet the Team — HEXAGON
                   </h2>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
