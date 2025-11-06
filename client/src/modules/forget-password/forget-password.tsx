@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import InputField from "@/components/shared/InputField";
 import Image from "next/image";
 import Link from "next/link";
+import { Home } from "lucide-react";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
@@ -67,7 +68,7 @@ const ForgetPassword = () => {
 
               <div className="text-center mt-4">
                 <a
-                  href="#"
+                  href="/login"
                   className="text-gray-700 hover:text-red-500 font-medium text-sm"
                 >
                   Back to Login
@@ -89,10 +90,20 @@ const ForgetPassword = () => {
               >
                 Back to Login
               </Link>
+              
+              
             </div>
           )}
         </div>
       </div>
+      {/*home btn*/}
+      <Link
+                href="/"
+                title="Go to Home"
+                className="fixed top-6 right-6 p-4 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-all duration-300 transform hover:scale-105 z-50"
+              >
+                <Home size={24} />
+      </Link>
     </div>
   );
 };
