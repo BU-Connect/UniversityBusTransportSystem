@@ -43,7 +43,7 @@ const Footer = () => {
                             Quick Links
                         </h3>
                         <ul className="space-y-3 text-sm">
-                            <li><a href="#" className="hover:text-red-500">Bus Schedules</a></li>
+                            <li><a href="/schedules" className="hover:text-red-500">Bus Schedules</a></li>
                             <li><a href="#" className="hover:text-red-500">Track the Bus</a></li>
                             <li><a href="#" className="hover:text-red-500">Live Bus Updates</a></li>
                             <li><a href="#" className="hover:text-red-500">Download App</a></li>
@@ -59,7 +59,7 @@ const Footer = () => {
                             <li><a href="#" className="hover:text-red-500">FAQs</a></li>
                             <li><a href="#" className="hover:text-red-500">Report an Issue</a></li>
                             <li><a href="#" className="hover:text-red-500">Contact Support</a></li>
-                            <li><a href="#" className="hover:text-red-500">Affiliates</a></li>
+                            <li><a href="/contact" className="hover:text-red-500">Affiliates</a></li>
                         </ul>
                     </div>
 
